@@ -93,6 +93,7 @@ const argv = yargs
 
 Issuer.discover(argv.issuer).then(function(issuer) {
   const client = new issuer.Client({
+    
     client_id: argv.clientId,
     client_secret: argv.clientSecret
   });

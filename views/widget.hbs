@@ -1,0 +1,32 @@
+<div id="okta-login-container"></div>
+<script type="text/javascript">
+  var config = {
+    "logoText": "Testing 123",
+    "features": {
+      "router": true,
+      "securityImage": false,
+      "autoPush": true,
+      "smsRecovery": false,
+      "selfServiceUnlock": true,
+      "callRecovery": false,
+      "multiOptionalFactorEnroll": true,
+      "windowsVerify": true
+    },
+    "baseUrl": "{{client.issuer}}",
+    "language": "en"
+  }
+
+  config["features.registration"] = true;
+  config["clientId"] = '{{client.id}}';
+  config["authScheme"] = 'SESSION';
+
+  var oktaSignIn = new OktaSignIn(config);
+  oktaSignIn.renderEl(
+    { el: '#okta-login-container' },
+    function(res) {
+      if (res.status === 'SUCCESS') {
+        res.session.setCookieAndRedirect('{{client.redirectUrl}}');
+      }
+    }
+  );
+</script>

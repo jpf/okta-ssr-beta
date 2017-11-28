@@ -21,6 +21,7 @@ module.exports = function(issuer, client, authzParams) {
   const callbackRoute = url.parse(authzParams.redirect_uri).path;
   const clientModel = {
     id: client.client_id,
+    issuer: issuer.metadata.issuer,
     redirectUrl: authzParams.redirect_uri
   };
 
@@ -170,6 +171,12 @@ module.exports = function(issuer, client, authzParams) {
     res.render('error', {
       client: clientModel,
       message: errors.join('<br>')
+    });
+  });
+
+  app.get('/widget', function(req, res) {
+    res.render('widget', {
+      client: clientModel
     });
   });
 
