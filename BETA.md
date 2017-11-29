@@ -31,8 +31,8 @@ Once the new App has been created:
 
 Install the example OIDC application by running the following commands from your terminal:
 
-- $ `git clone https://github.com/jpf/okta-raas-beta.git`
-- $ `cd okta-raas-beta/`
+- $ `git clone https://github.com/jpf/okta-ssr-beta.git`
+- $ `cd okta-ssr-beta/`
 - $ `npm install`
 
   Note: For this to work, you will need to have [node.js](https://nodejs.org/en/) installed.
