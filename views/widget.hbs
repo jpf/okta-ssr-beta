@@ -1,26 +1,37 @@
 <div id="okta-login-container"></div>
 <script type="text/javascript">
-  var config = {
-    "logoText": "Testing 123",
-    "features": {
-      "router": true,
-      "securityImage": false,
-      "autoPush": true,
-      "smsRecovery": false,
-      "selfServiceUnlock": true,
-      "callRecovery": false,
-      "multiOptionalFactorEnroll": true,
-      "windowsVerify": true
-    },
-    "baseUrl": "{{client.issuer}}",
-    "language": "en"
-  }
 
-  config["features.registration"] = true;
-  config["clientId"] = '{{client.id}}';
-  config["authScheme"] = 'SESSION';
-
-  var oktaSignIn = new OktaSignIn(config);
+  var oktaSignIn = new OktaSignIn({
+      clientId: '{{client.id}}',
+      baseUrl: '{{client.issuer}}',
+      authScheme: 'SESSION',
+      /* See also: https://hackmd.io/GYBgHAJgrAbDIFoCcAmAjIgLAQwMZQQCMUB2YBbKEkAUzTW3BuyA?view */
+      registration: {
+          parseSchema: function(schema, onSuccess, onFailure) {
+             // handle parseSchema callback
+             onSuccess(schema);
+          },
+          preSubmit: function (postData, onSuccess, onFailure) {
+             // handle preSubmit callback
+             onSuccess(postData);
+          },
+          postSubmit: function (response, onSuccess, onFailure) {
+              // handle postsubmit callback
+              onSuccess(response);
+          }
+      },
+      features: {
+          router: true,
+          registration: true,
+          securityImage: false,
+          autoPush: true
+      },
+      /* See also: https://developer.okta.com/code/javascript/okta_sign-in_widget.html#customization */
+      labels: {
+          'primaryauth.title': 'Example Okta Widget'
+      },
+      language: "en"
+  });
   oktaSignIn.renderEl(
     { el: '#okta-login-container' },
     function(res) {

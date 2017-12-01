@@ -89,6 +89,7 @@ const argv = yargs
     return true;
   })
   .example('\t$0 --iss https://example.okta.com --cid YRBDFADvhbcsuwGJfP96 --cs 296iRuRznZFupE1F1yjxIw7y-kSYeGGtUJIfGJqo', '')
+  .env('')
   .argv;
 
 Issuer.discover(argv.issuer).then(function(issuer) {

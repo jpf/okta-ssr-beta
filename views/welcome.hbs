@@ -1,0 +1,60 @@
+<h1>You're almost done!</h1>
+<p>You just need to complete these steps to get this app working with Okta:</p>
+
+Whitelist the domain name for this app in your Okta org:
+<ol>
+  <li>
+    Open the
+    <a href="{{ oktaAdminOrg }}/admin/access/api/trusted_origins" target="_blank">Trusted Origins</a>
+    section of your Okta organization:
+    <a href="{{ oktaAdminOrg }}/admin/access/api/trusted_origins" target="_blank">{{ oktaAdminOrg }}/admin/access/api/trusted_origins</a>
+  </li>
+  <li>
+    Click the "Add Origin" button
+  </li>
+  <li>
+    Paste this URL into the <b>Name</b> and <b>Origin URL</b> boxes: <code>{{ thisAppUrl }}</code>
+  </li>
+  <li>
+  Enable both 
+    <a href="http://developer.okta.com/docs/api/getting_started/enabling_cors.html" target="_blank">
+      <b>CORS</b> 
+    </a>
+    and <b>Redirect</b>
+  </li>
+  <li>
+    Click "Save"
+  </li>
+</ol>
+
+Add redirect URIs for this app in the OIDC app in your Okta org:
+<ol>  
+  <li>
+    Open the configuration for the OpenID Connect application that this app is connected to: 
+    <a href="{{ oktaAdminOrg }}/admin/app/oidc_client/instance/{{ client.id }}/#tab-general" target="_blank">{{ oktaAdminOrg }}/admin/app/oidc_client/instance/{{ client.id }}/#tab-general</a>
+  </li>
+    Click on the "Edit" button
+  <li>
+    Scroll down to the "Login" section
+  </li>
+  <li>
+    In the <b>Login redirect URIs</b> section, click on the "Add URI" button
+  </li>
+  <li>  
+    Paste this URI into the text box that just appeared: <code>{{ thisAppUrl }}/oauth/callback</code>
+  </li>
+  <li>  
+    Click the "Add URI" button again, then paste this URI into the text box that just appeared: <code>{{ thisAppUrl }}/widget</code>
+  </li>
+  <li>
+    In the <b>Logout redirect URIs</b> section, click on the "Add URI" button
+  </li>
+  <li>  
+    Paste this URI into the text box that just appeared: <code>{{ thisAppUrl }}/logout/callback</code>
+  </li>
+  <li>Click "Save"</li>
+</ol>
+
+<p>You should be all set now!</p>
+
+<p>Click this link to try it out: <a href="{{ thisAppUrl }}/widget">{{ thisAppUrl }}/widget</a></p>

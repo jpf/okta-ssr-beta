@@ -1,0 +1,22 @@
+{
+  "name": "Okta Self-Service Registration Beta",
+  "description": "A Node.js/Express app showing how to use Okta's Self Service Registration feature",
+  "repository": "https://github.com/jpf/okta-ssr-beta",
+  "logo": "https://www.okta.com/sites/all/themes/Okta/images/blog/Auras/Okta_Aura_Solid_BrightBlue_40percent.png",
+  "success_url": "/welcome",
+  "env": {
+    "ISSUER": {
+      "description": "URL for Okta Org",
+      "value": "https://example.oktapreview.com"
+    },
+    "CLIENT_ID": {
+      "description": "Client ID for the app with Self-Service Registration enabled",
+      "value": "ANRZhyDh8HBFN5abN6Rg"
+    },
+    "CLIENT_SECRET": {
+      "description": "Client Secret for the app with Self-Service Registration enabled",
+      "value": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    }
+  },
+  "keywords": ["node", "express", "oidc", "okta"]
+}

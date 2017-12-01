@@ -22,8 +22,14 @@ module.exports = function(issuer, client, authzParams) {
   const clientModel = {
     id: client.client_id,
     issuer: issuer.metadata.issuer,
-    redirectUrl: authzParams.redirect_uri
+    redirectUrl: 'DETERMINED_DYNAMICALLY'
   };
+
+  function redirectUrlFor(req) {
+    var rv = req.protocol + "://" + req.headers.host + callbackRoute;
+    console.log(rv);
+    return rv;
+  }
 
   /**
    * Middleware.
@@ -31,6 +37,8 @@ module.exports = function(issuer, client, authzParams) {
 
   // environment
   app.set('views', path.join(__dirname, 'views'));
+  // Trust the X-Forwarded-Proto header that Heroku, Ngrok, & etc set for TLS connections
+  app.enable('trust proxy');
 
   // view engine
   app.set('view engine', 'hbs');
@@ -96,6 +104,7 @@ module.exports = function(issuer, client, authzParams) {
 
   app.get('/login', passport.authenticate('oidc'));
   app.get('/login/force', function(req, res, next) {
+    authzParams.redirect_uri = redirectUrlFor(req);
     return passport.authenticate('oidc', _.defaults({
         prompt: 'login'
       }, authzParams)
@@ -115,6 +124,7 @@ module.exports = function(issuer, client, authzParams) {
   }));
 
   app.get('/logout', function(req, res) {
+    clientModel.redirectUrl = redirectUrlFor(req);
     if (req.isAuthenticated()) {
       if (issuer.end_session_endpoint) {
         req.session.logout_state = crypto.randomBytes(24).toString('hex');
@@ -139,6 +149,7 @@ module.exports = function(issuer, client, authzParams) {
   });
 
   app.get('/logout/callback', function(req, res) {
+    clientModel.redirectUrl = redirectUrlFor(req);
     console.log(req.query);
     if (req.isAuthenticated() && req.query.state && req.session.logout_state) {
       if (req.query.state === req.session.logout_state) {
@@ -154,6 +165,7 @@ module.exports = function(issuer, client, authzParams) {
   });
 
   app.get(['/', '/profile'], function(req, res) {
+    authzParams.redirect_uri = redirectUrlFor(req);
     if(req.isAuthenticated()){
       res.render('profile', {
         client: clientModel,
@@ -166,6 +178,7 @@ module.exports = function(issuer, client, authzParams) {
   });
 
   app.get('/error', function(req, res) {
+    clientModel.redirectUrl = redirectUrlFor(req);
     const errors = req.flash('error');
     console.log(errors);
     res.render('error', {
@@ -175,8 +188,19 @@ module.exports = function(issuer, client, authzParams) {
   });
 
   app.get('/widget', function(req, res) {
+    clientModel.redirectUrl = redirectUrlFor(req);
     res.render('widget', {
       client: clientModel
+    });
+  });
+
+  app.get('/welcome', function(req, res) {
+    clientModel.redirectUrl = redirectUrlFor(req);
+    res.render('welcome', {
+      thisAppUrl: req.protocol + "://" + req.headers.host,
+      client: clientModel,
+      oktaAdminOrg: issuer.metadata.issuer.replace('.', '-admin.'),
+      issuer: issuer
     });
   });
 
