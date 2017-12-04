@@ -1,5 +1,5 @@
 {
-  "name": "Okta Self-Service Registration Beta",
+  "name": "Okta Self-Service Registration",
   "description": "A Node.js/Express app showing how to use Okta's Self Service Registration feature",
   "repository": "https://github.com/jpf/okta-ssr-beta",
   "logo": "https://www.okta.com/sites/all/themes/Okta/images/blog/Auras/Okta_Aura_Solid_BrightBlue_40percent.png",
