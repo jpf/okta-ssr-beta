@@ -50,7 +50,7 @@ Once the new App has been created:
 Once you've set up the OIDC app in Okta, you will need to deploy the sample app
 to Heroku. Start that process by clicking the button below:
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/jpf/okta-ssr-beta)
 
 You will be taken to Heroku and prompted for information to enter for your this
 ample app, in particular you will need:
