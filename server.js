@@ -93,12 +93,14 @@ const argv = yargs
   .argv;
 
 Issuer.discover(argv.issuer).then(function(issuer) {
+  var hostname = (process.env.HEROKU_APP_NAME ? process.env.HEROKU_APP_NAME + '.herokuapp.com' : 'localhost:' + argv.port)
+  
   const client = new issuer.Client({
     
     client_id: argv.clientId,
     client_secret: argv.clientSecret
   });
-  const redirectUrl = (argv.https ? 'https' : 'http') + '://localhost:' + argv.port + '/oauth/callback';
+  const redirectUrl = (argv.https ? 'https' : 'http') + '://' + hostname + '/oauth/callback';
   const authzParams = {
     scope: argv.scope,
     response_type: argv.responseType,
