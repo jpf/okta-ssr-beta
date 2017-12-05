@@ -5,6 +5,9 @@
   "logo": "https://www.okta.com/sites/all/themes/Okta/images/blog/Auras/Okta_Aura_Solid_BrightBlue_40percent.png",
   "success_url": "/welcome",
   "env": {
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
     "ISSUER": {
       "description": "URL for Okta Org",
       "value": "https://example.oktapreview.com"
