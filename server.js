@@ -100,7 +100,8 @@ Issuer.discover(argv.issuer).then(function(issuer) {
     client_id: argv.clientId,
     client_secret: argv.clientSecret
   });
-  const redirectUrl = (argv.https ? 'https' : 'http') + '://' + hostname + '/oauth/callback';
+  // const redirectUrl = (argv.https ? 'https' : 'http') + '://' + hostname + '/oauth/callback';
+  const redirectUrl = 'https://' + hostname + '/oauth/callback';
   const authzParams = {
     scope: argv.scope,
     response_type: argv.responseType,
